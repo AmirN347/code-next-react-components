@@ -9,13 +9,17 @@ const EMPTY_MESSAGE = {
 export const SiblingToSibling = () => {
   const [message, setMessage] = useState(EMPTY_MESSAGE);
 
+  const onMessage = (nextMessage) => {
+    setMessage(nextMessage);
+  }
+
   return (
     <>
       <h2>SiblingToSibling</h2>
 
-      <Foo message={message} />
+      <Foo message={message} onMessage={onMessage}/>
 
-      <Bar message={message} />
+      <Bar message={message} onMessage={onMessage}/>
     </>
   );
 };
@@ -30,7 +34,7 @@ const Foo = (props) => {
   };
 
   // TODO: Wire in this click handler somewhere reasonable.
-  const onClick = () => {
+  const onClick = (event) => {
     if (props.onMessage) {
       props.onMessage({ from: 'foo', text });
     }
@@ -42,7 +46,7 @@ const Foo = (props) => {
       <div>last message from '{message.from}': {message.text}</div>
       <div className="input-group">
         <input className="form-control" onChange={onChange} value={text} />
-        <button className="btn btn-primary">submit</button>
+        <button className="btn btn-primary" onClick={onClick}>submit</button>
       </div>
     </>
   );
